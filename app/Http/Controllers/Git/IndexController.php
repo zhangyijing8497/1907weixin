@@ -11,8 +11,8 @@ class IndexController extends Controller
     public function index()
     {
         $cmd = "cd /data/wwwroot/default/1907weixin && git pull";
-        shell_exec($cmd);
+        shell_exec($cmd);   //
     }
 
-    
+
 }
