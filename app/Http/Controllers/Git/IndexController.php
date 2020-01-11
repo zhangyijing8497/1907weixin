@@ -13,4 +13,6 @@ class IndexController extends Controller
         $cmd = "cd /data/wwwroot/default/1907weixin && git pull";
         shell_exec($cmd);
     }
+
+    
 }
