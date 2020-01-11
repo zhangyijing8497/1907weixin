@@ -190,5 +190,39 @@ class WechatController extends Controller
         $file_name = date('YmdHis').rand(1111,9999).'.mp4';
         file_put_contents($file_name,$video);
     } 
+
+    /**微信群发 */
+    public function sendAllByOpenId()
+    {
+        $users = WechatUser::get()->toArray();
+        // print_r($users);die;
+        $openid_list = array_column($users,'openid');
+        // print_r($openid_list);die;
+        // $openid_list = [
+        //     'obbcZwynJ2PnB4gdgG5hWlyGNmxg',
+        //     'obbcZwzM3KGIy4p0O60Sn3na4fac',
+        //     'obbcZwzFGIn4sRC_Ad1cdrh3BJdM',
+        //     'obbcZw-WOBBw9WUIUgmOME9rMSV8'
+        // ];
+        $access_token = Wechat::getAccessToken();
+        $url = "https://api.weixin.qq.com/cgi-bin/message/mass/send?access_token=".$access_token;
+        
+        $msg = date('Y-m-d H:i:s')."你好!很高兴认识你";
+        $postData = [
+            "touser" =>$openid_list,
+            "msgtype" =>"text",
+            "text" =>[
+                "content" =>$msg
+            ]
+        ];
+        $postData = json_encode($postData,JSON_UNESCAPED_UNICODE);
+        $res = Curl::post($url,$postData);
+        // print_r($res);die;
+        if($res['errcode'] > 0){
+            echo "错误信息: " .$res['errmsg'];
+        }else{
+            echo "推送成功";
+        }
+    }
     
 }

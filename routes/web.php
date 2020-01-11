@@ -20,6 +20,7 @@ Route::get('wechat/index','WechatController@index');
 
 Route::post('wechat/index','WechatController@index');
 Route::get('wechat/createMenu','WechatController@createMenu');//创建自定义菜单
+Route::get('wechat/sendmsg','WechatController@sendAllByOpenId');//微信群发
 
 // 后台首页
 Route::prefix('admin/')->group(function(){
