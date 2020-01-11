@@ -7,9 +7,7 @@ use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
-
-
-    
+    /**自动上线 */
     public function index()
     {
         $cmd = "cd /data/wwwroot/default/1907weixin && git pull";
