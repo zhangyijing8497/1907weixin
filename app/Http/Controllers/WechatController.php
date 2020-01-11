@@ -218,10 +218,10 @@ class WechatController extends Controller
         $postData = json_encode($postData,JSON_UNESCAPED_UNICODE);
         $res = Curl::post($url,$postData);
         // print_r($res);die;
-        if($res['errcode'] > 0){
-            echo "错误信息: " .$res['errmsg'];
-        }else{
+        if($res['errcode'] == 0){
             echo "推送成功";
+        }else{
+            echo "错误信息: " .$res['errmsg'];
         }
     }
     
