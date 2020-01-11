@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/test',function(){
+    echo date('Y-m-d H:i:s');
+});
+
 /**微信开发 */
 Route::get('wechat/index','WechatController@index');
 
