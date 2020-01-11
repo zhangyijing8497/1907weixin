@@ -58,5 +58,5 @@ Route::get('channel/index','Admin\ChannelController@index');
 Route::get('chart/index','Admin\ChartController@index');
 
 //自动上线 ..
-Route::post('/gitpull','Git\IndexController@index');
+Route::get('/gitpull','Git\IndexController@index');
 
