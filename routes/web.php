@@ -57,6 +57,6 @@ Route::get('channel/index','Admin\ChannelController@index');
 // 统计图表
 Route::get('chart/index','Admin\ChartController@index');
 
-//自动上线 ..
-Route::get('/gitpull','Git\IndexController@index');
+//自动上线 
+Route::post('/gitpull','Git\IndexController@index');
 
