@@ -217,6 +217,7 @@ class WechatController extends Controller
         ];
         $postData = json_encode($postData,JSON_UNESCAPED_UNICODE);
         $res = Curl::post($url,$postData);
+        $res = json_decode($res,true);
         // print_r($res);die;
         if($res['errcode'] == 0){
             echo "推送成功";
