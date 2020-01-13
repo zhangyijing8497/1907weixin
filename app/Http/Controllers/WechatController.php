@@ -257,7 +257,10 @@ class WechatController extends Controller
         //记录用户签到
         $redis_key = "checkin: ".date('Y-m-d');
         Redis::zadd($redis_key,time(),$user_info_arr['openid']); //将openID加入有序集合
-        echo $user_info_arr['nickname']."签到成功";
+        echo $user_info_arr['nickname']."签到成功"."签到时间: " .date('Y-m-d H:i:s');
+        $user_list = Redis::zrange($redis_key,0,-1);
+        echo "<hr>";
+        print_r($user_list);
     }
     
 }
