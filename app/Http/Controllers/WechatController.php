@@ -26,6 +26,7 @@ class WechatController extends Controller
         '王一博',
 	];
 
+    /**关注回复 */
     public function index(Request $request)
     {
         // $echostr = $_GET['echostr'];
@@ -121,6 +122,7 @@ class WechatController extends Controller
         }
     }   
     
+    /**自定义菜单 */
     public function createMenu()
     {
         $access_token = Wechat::getAccessToken();
@@ -224,6 +226,24 @@ class WechatController extends Controller
         }else{
             echo "错误信息: " .$res['errmsg'];
         }
+    }
+
+    public function test()
+    {
+        $redirect_uri = urlencode(env('WX_REDIRECT_URI'));
+        $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=".env('WX_APPID')."&redirect_uri=".$redirect_uri."&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+        echo $url;
+    }
+
+    /**接受网页授权code */
+    public function auth()
+    {
+        $code = $_GET['code']; //接收code
+        // 换取access_token
+        $url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='.env('WX_APPID').'&secret='.env('WX_APPSEC').'&code='.$code.'&grant_type=authorization_code';
+        $json_data = file_get_contents($url);
+        $arr = json_decode($json_data,true);
+        print_r($arr);
     }
     
 }

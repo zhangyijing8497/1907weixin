@@ -64,3 +64,7 @@ Route::get('chart/index','Admin\ChartController@index');
 //自动上线 
 Route::any('/gitpull','Git\IndexController@index');
 
+//微信网页授权
+Route::get('/wechat/test','WechatController@test');   //测试
+Route::get('/wechat/auth','WechatController@auth');   //测试
+
