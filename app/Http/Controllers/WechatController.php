@@ -44,6 +44,19 @@ class WechatController extends Controller
         if($msgType == 'image'){
             // 下载图片
             $this->downloadImg($mediaId);
+            // 从数据库随机回复图片
+            $where = ['media_format'=>'image'];
+            $randomImg = Media::inRandomOrder()->where($where)->first()->toArray();
+            $mediaId = $randomImg['wechat_media_id'];
+            echo "<xml>
+            <ToUserName><![CDATA[".$xmlObj->FromUserName."]]></ToUserName>
+            <FromUserName><![CDATA[".$xmlObj->ToUserName."]]></FromUserName>
+            <CreateTime>".time()."</CreateTime>
+            <MsgType><![CDATA[image]]></MsgType>
+            <Image>
+              <MediaId><![CDATA[".$mediaId."]]></MediaId>
+            </Image>
+          </xml>";
         }elseif($msgType == 'video'){
             // 下载视频
             $this->downloadVideo($mediaId);
@@ -83,23 +96,6 @@ class WechatController extends Controller
             $msg = "欢迎".$nickname."关注";
             // dd($data);
             Wechat::responseText($xmlObj,$msg);
-        }
-
-        // 图片回复
-        if($msgType == 'image'){
-            // 从数据库随机回复图片
-            $where = ['media_format'=>'image'];
-            $randomImg = Media::inRandomOrder()->where($where)->first()->toArray();
-            $mediaId = $randomImg['wechat_media_id'];
-            echo "<xml>
-            <ToUserName><![CDATA[".$xmlObj->FromUserName."]]></ToUserName>
-            <FromUserName><![CDATA[".$xmlObj->ToUserName."]]></FromUserName>
-            <CreateTime>".time()."</CreateTime>
-            <MsgType><![CDATA[image]]></MsgType>
-            <Image>
-              <MediaId><![CDATA[".$mediaId."]]></MediaId>
-            </Image>
-          </xml>";
         }
 
         //取消关注 
