@@ -82,6 +82,22 @@ class WechatController extends Controller
             Wechat::responseText($xmlObj,$msg);
         }
 
+        if($msgType == 'image'){
+            // 从数据库随机回复图片
+            $where = ['media_format'=>'image'];
+            $randomImg = Media::inRandomOrder()->where($where)->first()->toArray();
+            $mediaId = $randomImg['wechat_media_id'];
+            echo "<xml>
+            <ToUserName><![CDATA[".$xmlObj->FromUserName."]]></ToUserName>
+            <FromUserName><![CDATA[".$xmlObj->ToUserName."]]></FromUserName>
+            <CreateTime>".time()."</CreateTime>
+            <MsgType><![CDATA[image]]></MsgType>
+            <Image>
+              <MediaId><![CDATA[".$mediaId."]]></MediaId>
+            </Image>
+          </xml>";
+        }
+
         //取消关注 
         if($xmlObj->MsgType == "event" && $xmlObj->Event == "unsubscribe"){
             // 修改用户表的状态
