@@ -47,6 +47,9 @@ class WechatController extends Controller
         }elseif($msgType == 'video'){
             // 下载视频
             $this->downloadVideo($mediaId);
+        }elseif($msgType == 'voice'){
+            // 下载语音
+            $this->downloadAudio($mediaId);
         }
 
         if($xmlObj->MsgType == "event" && $xmlObj->Event == "subscribe"){
