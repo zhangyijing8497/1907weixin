@@ -246,7 +246,7 @@ class WechatController extends Controller
         $url = 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='.env('WX_APPID').'&secret='.env('WX_APPSEC').'&code='.$code.'&grant_type=authorization_code';
         $json_data = file_get_contents($url);
         $arr = json_decode($json_data,true);
-        print_r($arr);
+        // print_r($arr);
 
         // 获取用户信息
         $url = 'https://api.weixin.qq.com/sns/userinfo?access_token='.$arr['access_token'].'&openid='.$arr['openid'].'&lang=zh_CN';
@@ -262,6 +262,7 @@ class WechatController extends Controller
         $redis_key = "checkin: ".date('Y-m-d');
         Redis::zadd($redis_key,time(),$user_info_arr['openid']); //将openID加入有序集合
         echo $user_info_arr['nickname']."签到成功"."签到时间: " .date('Y-m-d H:i:s');
+        echo "<br>";
         $user_list = Redis::zrange($redis_key,0,-1);
         // echo "<hr>";
         // print_r($user_list);
