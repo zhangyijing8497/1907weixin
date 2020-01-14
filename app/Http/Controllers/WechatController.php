@@ -256,21 +256,22 @@ class WechatController extends Controller
         // 将用户信息保存至redis hash
         $key = 'h:user_info: '.$user_info_arr['openid'];
         Redis::hMset($key,$user_info_arr);
-        print_r($user_info_arr);
+        // print_r($user_info_arr);
 
         //记录用户签到
         $redis_key = "checkin: ".date('Y-m-d');
         Redis::zadd($redis_key,time(),$user_info_arr['openid']); //将openID加入有序集合
         echo $user_info_arr['nickname']."签到成功"."签到时间: " .date('Y-m-d H:i:s');
         $user_list = Redis::zrange($redis_key,0,-1);
-        echo "<hr>";
-        print_r($user_list);
+        // echo "<hr>";
+        // print_r($user_list);
         
         foreach($user_list as $k=>$v)
         {
             $key = 'h:user_info: '.$v;
             $user = Redis::hGetAll($key);
-            print_r($user);
+            echo "<img src='".$user['headimgurl']."'>";
+            // print_r($user);
         }
     }
     
