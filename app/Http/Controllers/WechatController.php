@@ -8,6 +8,7 @@ use App\Tools\Wechat;
 use App\Tools\Curl;
 use App\Model\Media;
 use App\Model\Channel;
+use App\Model\WxText;
 use App\Model\WechatUser;
 use Illuminate\Support\Facades\Redis;
 use DB;
@@ -63,6 +64,14 @@ class WechatController extends Controller
         }elseif($msgType == 'voice'){
             // 下载语音
             $this->getMedia($mediaId,$msgType);
+        }elseif($msgType == 'text'){
+            $text = $xmlObj->Content;
+            $arr = [
+                'text' => $text,
+                'openid' => $openid,
+                'add_time' => time()
+            ];
+            WxText::create($arr);
         }
 
         if($xmlObj->MsgType == "event" && $xmlObj->Event == "subscribe"){
