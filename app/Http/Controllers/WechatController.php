@@ -30,8 +30,8 @@ class WechatController extends Controller
     /**关注回复 */
     public function index(Request $request)
     {
-        $echostr = $_GET['echostr'];
-        echo $echostr;die;
+        // $echostr = $_GET['echostr'];
+        // echo $echostr;die;
 
         $xml = file_get_contents("php://input");//接受原始的xml或json数据流
         file_put_contents("log.txt","\n".$xml."\n",FILE_APPEND);//写入文件
