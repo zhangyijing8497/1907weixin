@@ -252,6 +252,10 @@ class WechatController extends Controller
         $url = 'https://api.weixin.qq.com/sns/userinfo?access_token='.$arr['access_token'].'&openid='.$arr['openid'].'&lang=zh_CN';
         $json_user_info = file_get_contents($url);
         $user_info_arr = json_decode($json_user_info,true);
+
+        // 将用户信息保存至redis hash
+        $key = 'h:user_info: '.$user_info_arr['openid'];
+        Redis::hMset($key,$user_info_arr);
         print_r($user_info_arr);
 
         //记录用户签到
@@ -261,6 +265,13 @@ class WechatController extends Controller
         $user_list = Redis::zrange($redis_key,0,-1);
         echo "<hr>";
         print_r($user_list);
+        
+        foreach($user_list as $k=>$v)
+        {
+            $key = 'h:user_info: '.$v;
+            $user = Redis::hGetAll($key);
+            print_r($user);
+        }
     }
     
 }
