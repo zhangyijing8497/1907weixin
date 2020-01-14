@@ -203,7 +203,7 @@ class WechatController extends Controller
             $wx_media = "wx_media/video/".$file_name;
             file_put_contents($wx_media,$media);
         }elseif($msgType=='voice'){
-            $file_name = date('YmdHis').rand(1111,9999).'.mp3';
+            $file_name = date('YmdHis').rand(1111,9999).'.amr';
             $wx_media = "wx_media/audio/".$file_name;
             file_put_contents($wx_media,$media);
         }
