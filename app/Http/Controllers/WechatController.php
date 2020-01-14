@@ -82,6 +82,7 @@ class WechatController extends Controller
             Wechat::responseText($xmlObj,$msg);
         }
 
+        // 图片回复
         if($msgType == 'image'){
             // 从数据库随机回复图片
             $where = ['media_format'=>'image'];
@@ -194,8 +195,8 @@ class WechatController extends Controller
         // 请求获取素材接口
         $img = file_get_contents($url);
         $imgName = date('YmdHis').rand(1111,9999).'.jpg';
-        // var_dump($img);
-        file_put_contents($imgName,$img);
+        $wx_media = "wx_media/imgs/".$imgName;
+        file_put_contents($wx_media,$img);
     }
 
     /**下载视频素材 */
@@ -207,7 +208,22 @@ class WechatController extends Controller
         $video = file_get_contents($url);
         // 保存视频
         $file_name = date('YmdHis').rand(1111,9999).'.mp4';
-        file_put_contents($file_name,$video);
+        $wx_media = "wx_media/video/".$file_name;
+        file_put_contents($wx_media,$video);
+    } 
+
+
+    /**下载语音素材 */
+    protected function downloadAudio($mediaId)
+    {
+        $access_token = Wechat::getAccessToken();
+        $url = 'https://api.weixin.qq.com/cgi-bin/media/get?access_token='.$access_token.'&media_id='.$mediaId;
+        // 请求获取素材接口
+        $audio = file_get_contents($url);
+        // 保存视频
+        $file_name = date('YmdHis').rand(1111,9999).'.mp3';
+        $wx_media = "wx_media/audio/".$file_name;
+        file_put_contents($wx_media,$audio);
     } 
 
     /**微信群发 */
