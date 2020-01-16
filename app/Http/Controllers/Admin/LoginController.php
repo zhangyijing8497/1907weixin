@@ -5,9 +5,39 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\UserModel;
+use App\Tools\Wechat;
+use App\Tools\Curl;
 
 class LoginController extends Controller
 {
+    public function test()
+    {
+        $access_token = Wechat::getAccessToken();
+        $url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=".$access_token;
+        $args = [
+            "touser" => "obbcZwzFGIn4sRC_Ad1cdrh3BJdM",
+            "template_id" => "qsBHYe94FHuqIBEjIYOPnpNWuOJO-vprFCZO1D-Mafk",
+            "data" => [
+                "code" => [
+                    "value" => "123123",
+                    "color" => "#173177"
+                ],
+                "name" => [
+                    "value" => "肖战",
+                    "color" => "#173177"
+                ],
+                "time" => [
+                    "value" => date('Y-m-d H:i:s'),
+                    "color" => "#173177"
+                ],
+            ],
+        ];
+
+        $args = json_encode($args,JSON_UNESCAPED_UNICODE);
+        $res = Curl::post($url,$args);
+        var_dump($res);die;
+    }
+
     public function login()
     {
         return view('login.login');

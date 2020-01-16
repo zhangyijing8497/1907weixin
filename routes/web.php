@@ -68,3 +68,7 @@ Route::any('/gitpull','Git\IndexController@index');
 Route::get('/wechat/test','WechatController@test');   //测试
 Route::get('/wechat/auth','WechatController@auth');   //接收 code
 
+//发送模板消息
+Route::post('admin/test','Admin\LoginController@test');
+
+
