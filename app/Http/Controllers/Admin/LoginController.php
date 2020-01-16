@@ -16,14 +16,14 @@ class LoginController extends Controller
         $url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=".$access_token;
         $args = [
             "touser" => "obbcZwzFGIn4sRC_Ad1cdrh3BJdM",
-            "template_id" => "qsBHYe94FHuqIBEjIYOPnpNWuOJO-vprFCZO1D-Mafk",
+            "template_id" => "	YEu5gZc-N74JE3eHT5yfDIck_NNv4xPxE-LlajKOMuc",
             "data" => [
                 "code" => [
-                    "value" => "123123",
+                    "value" => "000000",
                     "color" => "#173177"
                 ],
                 "name" => [
-                    "value" => "肖战",
+                    "value" => "你爸爸",
                     "color" => "#173177"
                 ],
                 "time" => [
